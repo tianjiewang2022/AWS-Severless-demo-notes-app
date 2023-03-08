@@ -1,0 +1,22 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1677815913408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1677815927145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n   \"version\": \"0.0.0\",\n   \"private\": true,\n   \"type\": \"module\",\n   \"scripts\": {\n-    \"dev\": \"sst env vite dev\",\n+    \"dev\": \"sst dev\",\n     \"build\": \"sst build\",\n     \"deploy\": \"sst deploy\",\n     \"remove\": \"sst remove\",\n     \"console\": \"sst console\",\n"
+                }
+            ],
+            "date": 1677815913408,
+            "name": "Commit-0",
+            "content": "{\n  \"name\": \"my-sst-app\",\n  \"version\": \"0.0.0\",\n  \"private\": true,\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"sst env vite dev\",\n    \"build\": \"sst build\",\n    \"deploy\": \"sst deploy\",\n    \"remove\": \"sst remove\",\n    \"console\": \"sst console\",\n    \"typecheck\": \"tsc --noEmit\",\n    \"gen\": \"hygen\"\n  },\n  \"devDependencies\": {\n    \"@tsconfig/node16\": \"^1.0.3\",\n    \"aws-cdk-lib\": \"2.62.2\",\n    \"constructs\": \"10.1.156\",\n    \"global-agent\": \"^3.0.0\",\n    \"hygen\": \"^6.2.11\",\n    \"sst\": \"2.0.0\",\n    \"typescript\": \"^4.9.5\"\n  },\n  \"workspaces\": [\n    \"packages/*\"\n  ],\n  \"overrides\": {\n    \"graphql\": \"16.5.0\"\n  }\n}"
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+{
+    "sourceFile": "packages/web/src/pages/Article.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1678306921846,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1678306965112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n export default function Article() {\n   const { id = \"\" } = useParams();\n \n   // Handle empty document cache\n-// https://formidable.com/open-source/urql/docs/basics/document-caching/#adding-typenames\n-const context = useMemo(() => ({ additionalTypenames: [\"Comment\"] }), []);\n+  // https://formidable.com/open-source/urql/docs/basics/document-caching/#adding-typenames\n+  const context = useMemo(() => ({ additionalTypenames: [\"Comment\"] }), []);\n \n   const [article] = useTypedQuery({\n     query: {\n       article: [\n@@ -19,11 +19,16 @@\n         {\n           id: true,\n           url: true,\n           title: true,\n+          comments: {\n+            id: true,\n+            text: true,\n+          },\n         },\n       ],\n     },\n+    context,\n   });\n \n   return (\n     <div>\n"
+                },
+                {
+                    "date": 1678307105771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import Empty from \"../components/Empty\";\n import Navbar from \"../components/Navbar\";\n import Loading from \"../components/Loading\";\n import styles from \"./Article.module.css\";\n+import { useMemo } from 'react';\n \n export default function Article() {\n   const { id = \"\" } = useParams();\n \n"
+                },
+                {
+                    "date": 1678307261860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,8 +30,20 @@\n     },\n     context,\n   });\n \n+  const [result, addComment] = useTypedMutation((opts: CommentForm) => ({\n+    addComment: [\n+      {\n+        text: opts.text,\n+        articleID: opts.articleID,\n+      },\n+      {\n+        id: true,\n+      },\n+    ],\n+  }));\n+\n   return (\n     <div>\n       <Navbar />\n       {article.fetching ? (\n"
+                },
+                {
+                    "date": 1678307574750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,19 @@\n import { useParams } from \"react-router-dom\";\n-import { useTypedQuery } from \"@my-sst-app/graphql/urql\";\n+import { useTypedMutation, useTypedQuery } from \"@my-sst-app/graphql/urql\";\n import Empty from \"../components/Empty\";\n import Navbar from \"../components/Navbar\";\n import Loading from \"../components/Loading\";\n import styles from \"./Article.module.css\";\n import { useMemo } from 'react';\n \n+interface CommentForm {\n+  text: string;\n+  articleID: string;\n+}\n+\n+\n+\n export default function Article() {\n   const { id = \"\" } = useParams();\n \n   // Handle empty document cache\n"
+                },
+                {
+                    "date": 1678307615352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,8 +62,15 @@\n             <a target=\"_blank\" href={article.data.article.url}>\n               {article.data.article.url}\n             </a>\n           </p>\n+          <ol className={styles.comments}>\n+            {article.data.article.comments?.map((comment) => (\n+              <li key={comment.id} className={styles.comment}>\n+                {comment.text}\n+              </li>\n+            ))}\n+          </ol>\n         </div>\n       ) : (\n         <Empty>Not Found</Empty>\n       )}\n"
+                },
+                {
+                    "date": 1678307640039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,8 +69,35 @@\n                 {comment.text}\n               </li>\n             ))}\n           </ol>\n+          <form\n+  className={styles.form}\n+  onSubmit={async (e) => {\n+    e.preventDefault();\n+\n+    const fd = new FormData(e.currentTarget);\n+    const text = fd.get(\"text\")!.toString();\n+\n+    e.currentTarget.reset();\n+\n+    text.length > 0 &&\n+      (await addComment({\n+        text,\n+        articleID: id,\n+      }));\n+  }}\n+>\n+  <textarea name=\"text\" className={styles.field}></textarea>\n+  <Button\n+    type=\"submit\"\n+    variant=\"secondary\"\n+    className={styles.button}\n+    loading={result.fetching || article.stale}\n+  >\n+    Add Comment\n+  </Button>\n+</form>\n         </div>\n       ) : (\n         <Empty>Not Found</Empty>\n       )}\n"
+                },
+                {
+                    "date": 1678307775270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,16 @@\n import { useParams } from \"react-router-dom\";\n-import { useTypedMutation, useTypedQuery } from \"@my-sst-app/graphql/urql\";\n+\n import Empty from \"../components/Empty\";\n import Navbar from \"../components/Navbar\";\n import Loading from \"../components/Loading\";\n import styles from \"./Article.module.css\";\n-import { useMemo } from 'react';\n \n+import { useMemo } from \"react\";\n+import { useTypedQuery, useTypedMutation } from \"@my-sst-app/graphql/urql\";\n+import Button from \"../components/Button\";\n+\n+\n interface CommentForm {\n   text: string;\n   articleID: string;\n }\n"
+                }
+            ],
+            "date": 1678306921846,
+            "name": "Commit-0",
+            "content": "import { useParams } from \"react-router-dom\";\nimport { useTypedQuery } from \"@my-sst-app/graphql/urql\";\nimport Empty from \"../components/Empty\";\nimport Navbar from \"../components/Navbar\";\nimport Loading from \"../components/Loading\";\nimport styles from \"./Article.module.css\";\n\nexport default function Article() {\n  const { id = \"\" } = useParams();\n\n  // Handle empty document cache\n// https://formidable.com/open-source/urql/docs/basics/document-caching/#adding-typenames\nconst context = useMemo(() => ({ additionalTypenames: [\"Comment\"] }), []);\n\n  const [article] = useTypedQuery({\n    query: {\n      article: [\n        { articleID: id },\n        {\n          id: true,\n          url: true,\n          title: true,\n        },\n      ],\n    },\n  });\n\n  return (\n    <div>\n      <Navbar />\n      {article.fetching ? (\n        <Loading />\n      ) : article.data?.article ? (\n        <div className={styles.article}>\n          <h1>{article.data.article.title}</h1>\n          <p>\n            <a target=\"_blank\" href={article.data.article.url}>\n              {article.data.article.url}\n            </a>\n          </p>\n        </div>\n      ) : (\n        <Empty>Not Found</Empty>\n      )}\n    </div>\n  );\n}\n"
+        }
+    ]
+}

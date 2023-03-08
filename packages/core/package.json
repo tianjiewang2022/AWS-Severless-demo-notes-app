@@ -1,0 +1,20 @@
+{
+  "name": "@my-sst-app/core",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "sst bind vitest",
+    "typecheck": "tsc -noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.4",
+    "sst": "2.0.0",
+    "vitest": "^0.29.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1327.0",
+    "kysely": "^0.23.4",
+    "kysely-data-api": "^0.2.0",
+    "ulid": "^2.3.0"
+  }
+}

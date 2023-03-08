@@ -1,0 +1,22 @@
+{
+    "sourceFile": "packages/web/src/pages/Home.module.css",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1678306461213,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1678306698009,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,5 @@\n }\n \n .footerSeparator {\n   margin: 0 0.5rem;\n-}\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1678306461213,
+            "name": "Commit-0",
+            "content": ".list {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.article {\n  padding: 1rem;\n  border-bottom: 1px solid var(--color-divider);\n}\n\n.title {\n  font-size: 1.5rem;\n  display: inline-block;\n}\n\n.url {\n  color: var(--text-dimmed);\n}\n\n.footer {\n  margin-top: 0.8rem;\n}\n\n.footerSeparator {\n  margin: 0 0.5rem;\n}\n"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "sst.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1677816302965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1677816302965,
+            "name": "Commit-0",
+            "content": "{\n    \"name\": \"my-sst-app\",\n    \"region\": \"us-east-1\",\n    \"main\": \"lib/index.ts\",\n    \"ssmPrefix\": \"/myOrg/myTeam\"\n}"
+        }
+    ]
+}

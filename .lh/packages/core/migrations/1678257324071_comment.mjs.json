@@ -1,0 +1,18 @@
+{
+    "sourceFile": "packages/core/migrations/1678257324071_comment.mjs",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1678257450293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1678257450293,
+            "name": "Commit-0",
+            "content": "import { Kysely } from \"kysely\";\n\n/**\n * @param db {Kysely<any>}\n */\nexport async function up(db) {\n  await db.schema\n    .createTable(\"comment\")\n    .addColumn(\"commentID\", \"text\", (col) => col.primaryKey())\n    .addColumn(\"articleID\", \"text\", (col) => col.notNull())\n    .addColumn(\"text\", \"text\", (col) => col.notNull())\n    .execute();\n}\n\n/**\n * @param db {Kysely<any>}\n */\nexport async function down(db) {\n  await db.schema.dropTable(\"comment\").execute();\n}\n"
+        }
+    ]
+}

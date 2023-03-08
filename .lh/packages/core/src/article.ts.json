@@ -1,0 +1,18 @@
+{
+    "sourceFile": "packages/core/src/article.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1678257708170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1678257708170,
+            "name": "Commit-0",
+            "content": "export * as Article from \"./article\";\n\nimport { ulid } from \"ulid\";\nimport { SQL } from \"./sql\";\n\nexport async function create(title: string, url: string) {\n  const [result] = await SQL.DB.insertInto(\"article\")\n    .values({ articleID: ulid(), url, title })\n    .returningAll()\n    .execute();\n  return result;\n}\n\nexport async function get(articleID: string) {\n  return await SQL.DB.selectFrom(\"article\")\n    .selectAll()\n    .where(\"articleID\", \"=\", articleID)\n    .executeTakeFirst();\n}\n\nexport async function list() {\n  return await SQL.DB.selectFrom(\"article\")\n    .selectAll()\n    .orderBy(\"created\", \"desc\")\n    .execute();\n}\n\nexport function addComment(articleID: string, text: string) {\n  return SQL.DB.insertInto(\"comment\")\n    .values({\n      commentID: ulid(),\n      articleID,\n      text,\n    })\n    .returningAll()\n    .executeTakeFirstOrThrow();\n}\n\nexport function comments(articleID: string) {\n  return SQL.DB.selectFrom(\"comment\")\n    .selectAll()\n    .where(\"articleID\", \"=\", articleID)\n    .execute();\n}\n"
+        }
+    ]
+}

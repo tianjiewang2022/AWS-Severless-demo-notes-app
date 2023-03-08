@@ -1,0 +1,18 @@
+{
+    "sourceFile": "packages/web/src/pages/Article.module.css",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1678307799447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1678307799447,
+            "name": "Commit-0",
+            "content": ".article {\n  padding: 1rem;\n}\n\n.comments {\n  padding: 0;\n  margin: 1rem 0 0;\n  list-style: none;\n}\n\n.comment {\n  padding: 0.75rem 0;\n  border-bottom: 1px solid var(--color-divider);\n}\n\n.form {\n  margin-top: 1rem;\n}\n\n.field {\n  width: 100%;\n  display: block;\n  max-width: 600px;\n}\n\n.button {\n  margin-top: 1rem;\n}\n"
+        }
+    ]
+}

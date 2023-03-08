@@ -1,0 +1,26 @@
+{
+    "sourceFile": "sst.config.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1677815040956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1677815047028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,4 @@\n-\n import { SSTConfig } from \"sst\";\n import { Database } from \"./stacks/Database\"\n import { Web } from \"./stacks/Web\"\n import { Api } from \"./stacks/Api\"\n"
+                },
+                {
+                    "date": 1677816307505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import { Web } from \"./stacks/Web\"\n import { Api } from \"./stacks/Api\"\n import { Bucket } from \"sst/constructs\"\n \n+\n export default {\n   config(_input) {\n     return {\n       name: \"my-sst-app\",\n"
+                }
+            ],
+            "date": 1677815040956,
+            "name": "Commit-0",
+            "content": "\nimport { SSTConfig } from \"sst\";\nimport { Database } from \"./stacks/Database\"\nimport { Web } from \"./stacks/Web\"\nimport { Api } from \"./stacks/Api\"\nimport { Bucket } from \"sst/constructs\"\n\nexport default {\n  config(_input) {\n    return {\n      name: \"my-sst-app\",\n      region: \"us-east-1\",\n    };\n  },\n  stacks(app) {\n    app\n      .stack(Database)\n      .stack(Api)\n      .stack(Web)\n  },\n} satisfies SSTConfig;\n"
+        }
+    ]
+}

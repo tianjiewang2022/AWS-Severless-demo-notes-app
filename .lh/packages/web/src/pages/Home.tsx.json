@@ -1,0 +1,26 @@
+{
+    "sourceFile": "packages/web/src/pages/Home.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1678265285707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1678265301568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n export default function Home() {\n   // Handle empty document cache\n   // https://formidable.com/open-source/urql/docs/basics/document-caching/#adding-typenames\n   const context = useMemo(\n-    () => ({ additionalTypenames: [\"Article\", \"Comments\"] }), \n+    () => ({ additionalTypenames: [\"Article\", \"Comments\"] }),\n     []);\n   const [articles] = useTypedQuery({\n     query: {\n       articles: {\n"
+                },
+                {
+                    "date": 1678306095092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,13 @@\n                 <a target=\"_blank\" href={article.url} className={styles.url}>\n                   ({article.url.replace(/(^\\w+:|^)\\/\\//, \"\")})\n                 </a>\n               </div>\n+              <div className={styles.footer}>\n+    <strong>{article.comments.length}</strong>\n+    <span className={styles.footerSeparator}>&bull;</span>\n+    <Link to={`/article/${article.id}`}>View Comments</Link>\n+  </div>\n             </li>\n           ))}\n         </ol>\n       ) : (\n"
+                }
+            ],
+            "date": 1678265285706,
+            "name": "Commit-0",
+            "content": "import { useMemo } from \"react\";\nimport { Link } from \"react-router-dom\";\nimport { useTypedQuery } from \"@my-sst-app/graphql/urql\";\nimport Empty from \"../components/Empty\";\nimport Navbar from \"../components/Navbar\";\nimport Loading from \"../components/Loading\";\nimport styles from \"./Home.module.css\";\n\nexport default function Home() {\n  // Handle empty document cache\n  // https://formidable.com/open-source/urql/docs/basics/document-caching/#adding-typenames\n  const context = useMemo(\n    () => ({ additionalTypenames: [\"Article\", \"Comments\"] }), \n    []);\n  const [articles] = useTypedQuery({\n    query: {\n      articles: {\n        id: true,\n        url: true,\n        title: true,\n        comments: {\n          id: true,\n        },\n      },\n    },\n    context,\n  });\n\n  return (\n    <div>\n      <Navbar />\n      {articles.fetching ? (\n        <Loading />\n      ) : articles.data?.articles && articles.data?.articles.length > 0 ? (\n        <ol className={styles.list}>\n          {articles.data?.articles.map((article) => (\n            <li key={article.id} className={styles.article}>\n              <div>\n                <h2 className={styles.title}>\n                  <Link to={`/article/${article.id}`}>{article.title}</Link>\n                </h2>\n                &nbsp;\n                <a target=\"_blank\" href={article.url} className={styles.url}>\n                  ({article.url.replace(/(^\\w+:|^)\\/\\//, \"\")})\n                </a>\n              </div>\n            </li>\n          ))}\n        </ol>\n      ) : (\n        <Empty>&#10024; Post the first link &#10024;</Empty>\n      )}\n    </div>\n  );\n}\n"
+        }
+    ]
+}

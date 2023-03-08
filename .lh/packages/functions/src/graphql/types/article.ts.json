@@ -1,0 +1,34 @@
+{
+    "sourceFile": "packages/functions/src/graphql/types/article.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1678262767775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1678262941223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,12 @@\n   fields: (t) => ({\n     id: t.exposeID(\"articleID\"),\n     url: t.exposeString(\"url\"),\n     title: t.exposeString(\"title\"),\n+    comments: t.field({\n+      type: [CommentType],\n+      resolve: (article) => Article.comments(article.articleID),\n+    }),\n   }),\n });\n \n builder.queryFields((t) => ({\n"
+                },
+                {
+                    "date": 1678263737564,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,51 @@\n+import { Article } from \"@my-sst-app/core/article\";\n+import { SQL } from \"@my-sst-app/core/sql\";\n+import { builder } from \"../builder\";\n+\n+const CommentType = builder.objectRef<SQL.Row[\"comment\"]>(\"Comment\").implement({\n+  fields: (t) => ({\n+    id: t.exposeID(\"commentID\"),\n+    text: t.exposeString(\"text\"),\n+  }),\n+});\n+\n+const ArticleType = builder.objectRef<SQL.Row[\"article\"]>(\"Article\").implement({\n+  fields: (t) => ({\n+    id: t.exposeID(\"articleID\"),\n+    url: t.exposeString(\"url\"),\n+    title: t.exposeString(\"title\"),\n+  }),\n+});\n+\n+builder.queryFields((t) => ({\n+  article: t.field({\n+    type: ArticleType,\n+    args: {\n+      articleID: t.arg.string({ required: true }),\n+    },\n+    resolve: async (_, args) => {\n+      const result = await Article.get(args.articleID);\n+\n+      if (!result) {\n+        throw new Error(\"Article not found\");\n+      }\n+\n+      return result;\n+    },\n+  }),\n+  articles: t.field({\n+    type: [ArticleType],\n+    resolve: () => Article.list(),\n+  }),\n+}));\n+\n+builder.mutationFields((t) => ({\n+  createArticle: t.field({\n+    type: ArticleType,\n+    args: {\n+      url: t.arg.string({ required: true }),\n+      title: t.arg.string({ required: true }),\n+    },\n+    resolve: (_, args) => Article.create(args.title, args.url),\n+  }),\n+}));\n"
+                },
+                {
+                    "date": 1678263754295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,59 +13,8 @@\n   fields: (t) => ({\n     id: t.exposeID(\"articleID\"),\n     url: t.exposeString(\"url\"),\n     title: t.exposeString(\"title\"),\n-  }),\n-});\n-\n-builder.queryFields((t) => ({\n-  article: t.field({\n-    type: ArticleType,\n-    args: {\n-      articleID: t.arg.string({ required: true }),\n-    },\n-    resolve: async (_, args) => {\n-      const result = await Article.get(args.articleID);\n-\n-      if (!result) {\n-        throw new Error(\"Article not found\");\n-      }\n-\n-      return result;\n-    },\n-  }),\n-  articles: t.field({\n-    type: [ArticleType],\n-    resolve: () => Article.list(),\n-  }),\n-}));\n-\n-builder.mutationFields((t) => ({\n-  createArticle: t.field({\n-    type: ArticleType,\n-    args: {\n-      url: t.arg.string({ required: true }),\n-      title: t.arg.string({ required: true }),\n-    },\n-    resolve: (_, args) => Article.create(args.title, args.url),\n-  }),\n-}));\n-import { Article } from \"@my-sst-app/core/article\";\n-import { SQL } from \"@my-sst-app/core/sql\";\n-import { builder } from \"../builder\";\n-\n-const CommentType = builder.objectRef<SQL.Row[\"comment\"]>(\"Comment\").implement({\n-  fields: (t) => ({\n-    id: t.exposeID(\"commentID\"),\n-    text: t.exposeString(\"text\"),\n-  }),\n-});\n-\n-const ArticleType = builder.objectRef<SQL.Row[\"article\"]>(\"Article\").implement({\n-  fields: (t) => ({\n-    id: t.exposeID(\"articleID\"),\n-    url: t.exposeString(\"url\"),\n-    title: t.exposeString(\"title\"),\n     comments: t.field({\n       type: [CommentType],\n       resolve: (article) => Article.comments(article.articleID),\n     }),\n"
+                },
+                {
+                    "date": 1678265105930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,16 @@\n   }),\n }));\n \n builder.mutationFields((t) => ({\n+  addComment: t.field({\n+    type: CommentType,\n+    args: {\n+      articleID: t.arg.string({ required: true }),\n+      text: t.arg.string({ required: true }),\n+    },\n+    resolve: (_, args) => Article.addComment(args.articleID, args.text),\n+  }),\n   createArticle: t.field({\n     type: ArticleType,\n     args: {\n       url: t.arg.string({ required: true }),\n"
+                }
+            ],
+            "date": 1678262767775,
+            "name": "Commit-0",
+            "content": "import { Article } from \"@my-sst-app/core/article\";\nimport { SQL } from \"@my-sst-app/core/sql\";\nimport { builder } from \"../builder\";\n\nconst CommentType = builder.objectRef<SQL.Row[\"comment\"]>(\"Comment\").implement({\n  fields: (t) => ({\n    id: t.exposeID(\"commentID\"),\n    text: t.exposeString(\"text\"),\n  }),\n});\n\nconst ArticleType = builder.objectRef<SQL.Row[\"article\"]>(\"Article\").implement({\n  fields: (t) => ({\n    id: t.exposeID(\"articleID\"),\n    url: t.exposeString(\"url\"),\n    title: t.exposeString(\"title\"),\n  }),\n});\n\nbuilder.queryFields((t) => ({\n  article: t.field({\n    type: ArticleType,\n    args: {\n      articleID: t.arg.string({ required: true }),\n    },\n    resolve: async (_, args) => {\n      const result = await Article.get(args.articleID);\n\n      if (!result) {\n        throw new Error(\"Article not found\");\n      }\n\n      return result;\n    },\n  }),\n  articles: t.field({\n    type: [ArticleType],\n    resolve: () => Article.list(),\n  }),\n}));\n\nbuilder.mutationFields((t) => ({\n  createArticle: t.field({\n    type: ArticleType,\n    args: {\n      url: t.arg.string({ required: true }),\n      title: t.arg.string({ required: true }),\n    },\n    resolve: (_, args) => Article.create(args.title, args.url),\n  }),\n}));\n"
+        }
+    ]
+}
