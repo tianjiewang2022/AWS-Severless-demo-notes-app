@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1678311515747,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1678312370062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { defineConfig } from 'vite'\n import react from '@vitejs/plugin-react'\n+\n // https://vitejs.dev/config/\n export default defineConfig({\n   plugins: [react()],\n })\n"
+                },
+                {
+                    "date": 1678312377169,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { defineConfig } from 'vite'\n import react from '@vitejs/plugin-react'\n \n+\n // https://vitejs.dev/config/\n export default defineConfig({\n   plugins: [react()],\n })\n"
                 }
             ],
             "date": 1678311515747,
